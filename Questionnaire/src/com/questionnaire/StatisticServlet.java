@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.*;
 
-@WebServlet(name = "DBServlet", urlPatterns = "/db")
-public class DBServlet extends HttpServlet{
-    private static Connection connection = null; // хранит соединение с базой данных
-    private static Statement statement = null; // хранит и выполняет sql запросы
-    private static ResultSet result = null; // получает результаты выполнения sql запросов
+@WebServlet(name="Statistic", urlPatterns = "/statistic")
+public class StatisticServlet extends HttpServlet{
+
+    private static Connection connection = null;
+    private static Statement statement = null;
+    private static ResultSet result = null;
 
     private final static String userName = "root";
     private final static String password = "Tania_2018";
@@ -23,42 +24,6 @@ public class DBServlet extends HttpServlet{
             "&useLegacyDatetimeCode=false" +
             "&amp" +
             "&serverTimezone=UTC";
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            connection = DriverManager.getConnection(url, userName, password);
-            statement = connection.createStatement();
-
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "INSERT INTO users (firstName, lastName, age, position) VALUES (?, ?, ?, ?)");
-            preparedStatement.setString(1, req.getParameter("firstName"));
-            preparedStatement.setString(2, req.getParameter("lastName"));
-            preparedStatement.setString(3, req.getParameter("age"));
-            preparedStatement.setString(4, req.getParameter("position"));
-
-            preparedStatement.executeUpdate();
-
-            try {
-                this.doGet(req, resp);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException ignored) { }
-
-        }
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -89,7 +54,8 @@ public class DBServlet extends HttpServlet{
             }
             sb.append("</table>");
             resp.getWriter().println(sb.toString());
-            resp.getWriter().println("<br>Click this link to go to the <a href=\"/index.jsp\">starter page</a>");
+            resp.getWriter().println("<br><a href=\"/questionnaire.jsp\">Questionnaire</a>");
+            resp.getWriter().println("<br><a href=\"/\">Starter page</a>");
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
