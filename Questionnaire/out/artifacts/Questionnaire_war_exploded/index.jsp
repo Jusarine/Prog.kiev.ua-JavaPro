@@ -4,7 +4,7 @@
     <title>Questionnaire</title>
   </head>
   <body>
-    <form action="/user" method="POST">
+    <form action="/db" method="POST">
         FirstName: <input type="text" name="firstName"><br>
         LastName: <input type="text" name="lastName"><br>
         How old are you?<br>
