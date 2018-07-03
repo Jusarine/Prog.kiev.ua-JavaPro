@@ -4,7 +4,7 @@
     <title>Questionnaire</title>
 </head>
 <body>
-    <form action="/login" method="GET">
+    <form action="/questionnaire" method="GET">
         <% String firstName = (String) session.getAttribute("firstName");
             if (!firstName.equals("Unknown")){%>
             <%="<h3>Welcome, " + session.getAttribute("firstName") + " " + session.getAttribute("lastName") + "</h3"%>

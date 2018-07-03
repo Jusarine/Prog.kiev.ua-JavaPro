@@ -4,14 +4,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.*;
 
-@WebServlet(name="Statistic", urlPatterns = "/statistic")
-public class StatisticServlet extends HttpServlet{
-
+@WebServlet(name = "SignIn", urlPatterns = "/signin")
+public class SignInServlet extends HttpServlet{
     private static Connection connection = null;
     private static Statement statement = null;
+    private static PreparedStatement preparedStatement = null;
     private static ResultSet result = null;
 
     private final static String userName = "root";
@@ -25,44 +26,46 @@ public class StatisticServlet extends HttpServlet{
             "&serverTimezone=UTC";
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, userName, password);
 
-            statement = connection.createStatement();
-            printDB(resp);
-
-            resp.getWriter().println("<br><a href=\"/questionnaire.jsp\">Questionnaire</a>");
-            resp.getWriter().println("<br><a href=\"/\">Starter page</a>");
+            setSessionAttributes(req);
+            resp.sendRedirect("/questionnaire.jsp");
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (result != null) result.close();
                 if (statement != null) statement.close();
+                if (preparedStatement != null) preparedStatement.close();
                 if (connection != null) connection.close();
+                if (result != null) result.close();
             } catch (SQLException ignored) { }
         }
     }
 
-    private void printDB(HttpServletResponse resp) throws SQLException, IOException {
+    private void setSessionAttributes(HttpServletRequest req) throws SQLException {
+        statement = connection.createStatement();
         result = statement.executeQuery(
                 "SELECT * FROM users");
-        StringBuilder sb = new StringBuilder("<table>");
 
-        sb.append("<tr><th>firstName</th><th>lastName</th><th>age</th><th>position</th></tr>");
-
+        HttpSession session = null;
         while(result.next()){
-            sb.append("<tr>");
-            sb.append("<td>").append(result.getString("firstName")).append("</td>");
-            sb.append("<td>").append(result.getString("lastName")).append("</td>");
-            sb.append("<td>").append(result.getString("age")).append("</td>");
-            sb.append("<td>").append(result.getString("position")).append("</td>");
-            sb.append("</tr>");
+            if (req.getParameter("firstName").equals(result.getString("firstName")) &&
+                    req.getParameter("password").equals(result.getString("password"))){
+
+                session = req.getSession(true);
+                session.setAttribute("firstName", req.getParameter("firstName"));
+                session.setAttribute("lastName", result.getString("lastName"));
+                session.setAttribute("id", result.getString("id"));
+                break;
+            }
         }
-        sb.append("</table>");
-        resp.getWriter().println(sb.toString());
     }
 }
+
+
+
