@@ -14,8 +14,9 @@ public class Message {
 	private String to;
 	private String text;
 
-	public Message(String from, String text) {
+	public Message(String from, String to, String text) {
 		this.from = from;
+		this.to = to;
 		this.text = text;
 	}
 
@@ -31,27 +32,9 @@ public class Message {
 	
 	@Override
 	public String toString() {
-		return new StringBuilder().append("[").append(date)
-				.append(", From: ").append(from).append(", To: ").append(to)
-				.append("] ").append(text)
-                .toString();
-	}
-
-	public int send(String url) throws IOException {
-		URL obj = new URL(url);
-		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
-		
-		conn.setRequestMethod("POST");
-		conn.setDoOutput(true);
-	
-		OutputStream os = conn.getOutputStream();
-		try {
-			String json = toJSON();
-			os.write(json.getBytes(StandardCharsets.UTF_8));
-			return conn.getResponseCode();
-		} finally {
-			os.close();
-		}
+		return "[" + date +
+                ", From: " + from + ", To: " + to +
+                "] " + text;
 	}
 	
 	public Date getDate() {

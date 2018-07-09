@@ -1,4 +1,4 @@
-package com.chat;
+package com.chat.message;
 
 import java.util.ArrayList;
 import java.util.List;
