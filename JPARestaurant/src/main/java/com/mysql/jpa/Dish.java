@@ -18,6 +18,9 @@ public class Dish {
 
     private int discount;
 
+    public Dish() {
+    }
+
     public Dish(String name, double price, double weight, int discount) {
         this.name = name;
         this.price = price;
@@ -25,19 +28,8 @@ public class Dish {
         this.discount = discount;
     }
 
-    public Dish(String name) {
-        this.name = name;
-    }
-
-    public Dish() {
-    }
-
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
