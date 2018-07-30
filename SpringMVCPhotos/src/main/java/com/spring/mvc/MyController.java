@@ -6,8 +6,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,7 +21,7 @@ import java.util.Map;
 @RequestMapping("/")
 public class MyController {
 
-    private Map<Long, byte[]> photos = new HashMap<Long, byte[]>();
+    private Map<Long, byte[]> photos = new HashMap<>();
 
     @RequestMapping("/")
     public String onIndex() {
@@ -58,6 +62,19 @@ public class MyController {
             return "index";
     }
 
+    @RequestMapping(value = "/delete_checked_photos", method = RequestMethod.POST)
+    public String onDeleteCheckedPhotos(@RequestParam long[] ids){
+        for (long id : ids) {
+            photos.remove(id);
+        }
+        return "index";
+    }
+
+    @RequestMapping("/list")
+    public ModelAndView onList(){
+        return new ModelAndView("list", "ids", photos.keySet());
+    }
+
     private ResponseEntity<byte[]> photoById(long id) {
         byte[] bytes = photos.get(id);
         if (bytes == null)
@@ -66,6 +83,6 @@ public class MyController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
 
-        return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 }
