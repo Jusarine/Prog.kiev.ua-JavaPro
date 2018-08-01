@@ -1,11 +1,11 @@
-package ua.kiev.prog.model;
+package com.spring.mvc.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="Groups1")
+@Table(name="Groups")
 public class Group {
     @Id
     @GeneratedValue

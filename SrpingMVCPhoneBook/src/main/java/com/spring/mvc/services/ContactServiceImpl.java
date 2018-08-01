@@ -1,12 +1,12 @@
-package ua.kiev.prog.services;
+package com.spring.mvc.services;
 
+import com.spring.mvc.dao.ContactDAO;
+import com.spring.mvc.dao.GroupDAO;
+import com.spring.mvc.model.Contact;
+import com.spring.mvc.model.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.kiev.prog.dao.ContactDAO;
-import ua.kiev.prog.dao.GroupDAO;
-import ua.kiev.prog.model.Contact;
-import ua.kiev.prog.model.Group;
 
 import java.util.List;
 
@@ -30,6 +30,11 @@ public class ContactServiceImpl implements ContactService {
     @Transactional
     public void deleteContact(long[] ids) {
         contactDAO.delete(ids);
+    }
+
+    @Transactional
+    public void deleteGroup(Group group) {
+        groupDAO.delete(group);
     }
 
     @Transactional(readOnly=true)

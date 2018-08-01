@@ -1,4 +1,4 @@
-package ua.kiev.prog.config;
+package com.spring.mvc.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan("ua.kiev.prog")
+@ComponentScan("com.spring.mvc")
 @EnableTransactionManagement
 @EnableWebMvc
 public class AppConfig extends WebMvcConfigurerAdapter {
@@ -40,7 +40,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactory.setJpaProperties(jpaProp);
-        entityManagerFactory.setPackagesToScan("ua.kiev.prog");
+        entityManagerFactory.setPackagesToScan("com.spring.mvc");
 
         return entityManagerFactory;
     }

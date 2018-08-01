@@ -1,5 +1,7 @@
-package ua.kiev.prog.controllers;
+package com.spring.mvc.controllers;
 
+import com.spring.mvc.model.Group;
+import com.spring.mvc.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.kiev.prog.model.Group;
-import ua.kiev.prog.services.ContactService;
 
 @Controller
 public class GroupController {
@@ -37,4 +37,22 @@ public class GroupController {
 
         return "index";
     }
+
+    @RequestMapping("/group_delete_page")
+    public String groupDeletePage(Model model) {
+        model.addAttribute("groups", contactService.listGroups());
+        return "group_delete_page";
+    }
+
+    @RequestMapping(value = "/group/delete", method = RequestMethod.POST)
+    public String groupDelete(@RequestParam("group") long groupId) {
+
+        if (groupId != DEFAULT_GROUP_ID){
+            Group group = contactService.findGroup(groupId);
+            contactService.deleteGroup(group);
+        }
+
+        return "redirect:/";
+    }
+
 }

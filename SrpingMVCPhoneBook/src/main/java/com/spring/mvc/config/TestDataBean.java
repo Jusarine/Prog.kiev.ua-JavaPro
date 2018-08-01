@@ -1,10 +1,10 @@
-package ua.kiev.prog.config;
+package com.spring.mvc.config;
 
+import com.spring.mvc.model.Contact;
+import com.spring.mvc.model.Group;
+import com.spring.mvc.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.kiev.prog.model.Contact;
-import ua.kiev.prog.model.Group;
-import ua.kiev.prog.services.ContactService;
 
 import javax.annotation.PostConstruct;
 

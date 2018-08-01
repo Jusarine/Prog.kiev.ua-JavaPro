@@ -1,7 +1,7 @@
-package ua.kiev.prog.dao;
+package com.spring.mvc.dao;
 
+import com.spring.mvc.model.Group;
 import org.springframework.stereotype.Repository;
-import ua.kiev.prog.model.Group;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

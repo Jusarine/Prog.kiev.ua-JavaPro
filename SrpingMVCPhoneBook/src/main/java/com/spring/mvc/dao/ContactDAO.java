@@ -1,7 +1,7 @@
-package ua.kiev.prog.dao;
+package com.spring.mvc.dao;
 
-import ua.kiev.prog.model.Contact;
-import ua.kiev.prog.model.Group;
+import com.spring.mvc.model.Contact;
+import com.spring.mvc.model.Group;
 
 import java.util.List;
 

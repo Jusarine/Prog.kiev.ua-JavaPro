@@ -1,5 +1,8 @@
-package ua.kiev.prog.controllers;
+package com.spring.mvc.controllers;
 
+import com.spring.mvc.model.Contact;
+import com.spring.mvc.model.Group;
+import com.spring.mvc.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.kiev.prog.model.Contact;
-import ua.kiev.prog.model.Group;
-import ua.kiev.prog.services.ContactService;
 
-import static ua.kiev.prog.controllers.GroupController.DEFAULT_GROUP_ID;
+import static com.spring.mvc.controllers.GroupController.DEFAULT_GROUP_ID;
 
 @Controller
 public class ContactController {
@@ -51,7 +51,7 @@ public class ContactController {
     }
 
     @RequestMapping(value = "/contact/delete", method = RequestMethod.POST)
-    public ResponseEntity<Void> delete(@RequestParam(value = "toDelete[]", required = false) long[] toDelete) {
+    public ResponseEntity<Void> contactDelete(@RequestParam(value = "toDelete[]", required = false) long[] toDelete) {
         if (toDelete != null && toDelete.length > 0)
             contactService.deleteContact(toDelete);
 
